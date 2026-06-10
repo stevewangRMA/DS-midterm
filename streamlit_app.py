@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error, explained_variance_score
 
 # ---------- Page config ----------
-st.set_page_config(page_title="Medicare Spending Analysis", page_icon="🏥", layout="wide")
+st.set_page_config(page_title="Medicare Spending Analysis", layout="wide")
 
 # 6 care categories = our features X; they sum to ~ total spend (y)
 FEATURES = ["hospital_snf", "physician", "outpatient", "home_health", "hospice", "dme"]
@@ -49,8 +49,7 @@ df = load_data()
 model, metrics = train_model(df)
 
 # ---------- Sidebar: navigation ----------
-st.sidebar.title("🏥 Medicare Spending Project")
-st.sidebar.markdown("A healthcare twist on the California Housing template")
+st.sidebar.title("Medicare Spending Project")
 page = st.sidebar.radio(
     "Go to page",
     ["1. Introduction (Business Case)", "2. Data Visualization", "3. Prediction Model"],
@@ -84,8 +83,8 @@ if page.startswith("1"):
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Counties", f"{len(df):,}")
-    c2.metric("Avg total spend", f"${df['total_spend'].mean():,.0f}")
-    c3.metric("Min / Max", f"${df['total_spend'].min():,.0f} / ${df['total_spend'].max():,.0f}")
+    c2.metric("Avg total spend", f"\\${df['total_spend'].mean():,.0f}")
+    c3.metric("Min / Max", f"\\${df['total_spend'].min():,.0f} / \\${df['total_spend'].max():,.0f}")
     c4.metric("States covered", f"{df['state'].nunique()}")
 
     st.subheader("What the dataset looks like")
@@ -203,7 +202,7 @@ elif page.startswith("3"):
     st.caption("All coefficients are close to 1: each category adds roughly 1:1 to total spend, as expected.")
 
     # --- Interactive predictor ---
-    st.subheader("🎛️ Try it: set the spends and predict the total")
+    st.subheader("Try it: set the spends and predict the total")
     st.markdown("Move the sliders to define a hypothetical county; the model predicts its total per-enrollee spend.")
     cols = st.columns(3)
     inputs = {}
@@ -215,7 +214,7 @@ elif page.startswith("3"):
     st.success(f"Predicted total spend per enrollee: **${pred:,.0f}**")
 
     # --- Residual analysis: flag overspending counties (the "solve a problem" part) ---
-    st.subheader("🔍 Which counties spend more than the model predicts?")
+    st.subheader("Which counties spend more than the model predicts?")
     st.markdown(
         "We predict each county's total spend, then look at actual − predicted (the residual). "
         "**A large residual** means the county spends well above what its care mix implies -- "
