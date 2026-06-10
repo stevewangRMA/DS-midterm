@@ -81,11 +81,12 @@ if page.startswith("1"):
         """
     )
 
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Counties", f"{len(df):,}")
     c2.metric("Avg total spend", f"\\${df['total_spend'].mean():,.0f}")
-    c3.metric("Min / Max", f"\\${df['total_spend'].min():,.0f} / \\${df['total_spend'].max():,.0f}")
-    c4.metric("States covered", f"{df['state'].nunique()}")
+    c3.metric("Min spend", f"\\${df['total_spend'].min():,.0f}")
+    c4.metric("Max spend", f"\\${df['total_spend'].max():,.0f}")
+    c5.metric("States covered", f"{df['state'].nunique()}")
 
     st.subheader("What the dataset looks like")
     st.markdown(
